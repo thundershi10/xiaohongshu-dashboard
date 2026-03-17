@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>小红书品牌洞察 Dashboard | 2026-03-17</title>
+  <title>小红书品牌洞察 Dashboard</title>
   <style>
     :root {
       --bg: #0b1020;
@@ -18,282 +18,296 @@
       --line: #2b3767;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(180deg, #0a1020 0%, #10182d 100%);
-      color: var(--text);
-    }
-    .wrap { max-width: 1440px; margin: 0 auto; padding: 28px; }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.4fr .9fr;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-    .card {
-      background: rgba(18, 25, 51, .92);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.22);
-    }
-    h1 { margin: 0 0 10px; font-size: 30px; }
-    h2 { margin: 0 0 12px; font-size: 20px; }
-    h3 { margin: 0 0 10px; font-size: 16px; }
-    p, li { color: var(--muted); line-height: 1.6; }
-    .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-    .pill {
-      padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px;
-      color: var(--muted); font-size: 13px; background: rgba(255,255,255,.03);
-    }
-    .signals li { margin-bottom: 12px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .brand-card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
-    .brand-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .status { font-size: 12px; padding: 5px 10px; border-radius: 999px; font-weight: 600; }
-    .green { background: rgba(34,197,94,.12); color: #86efac; }
-    .yellow { background: rgba(245,158,11,.12); color: #fcd34d; }
-    .red { background: rgba(239,68,68,.12); color: #fca5a5; }
-    .blue { background: rgba(96,165,250,.12); color: #93c5fd; }
-    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .mini { background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
-    .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 10px; }
-    .kpi .mini strong { font-size: 22px; display: block; color: var(--text); }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { color: var(--text); font-size: 13px; }
-    td { color: var(--muted); font-size: 14px; }
+    body { margin: 0; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif; background: linear-gradient(180deg,#0a1020 0%,#10182d 100%); color: var(--text); }
+    .wrap { max-width: 1480px; margin: 0 auto; padding: 28px; }
+    .card { background: rgba(18,25,51,.94); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: 0 8px 30px rgba(0,0,0,.22); }
+    .hero { display:grid; grid-template-columns: 1.35fr .95fr; gap: 16px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:0 0 12px; font-size:20px; }
+    h3 { margin:0 0 10px; font-size:16px; }
+    p, li { color: var(--muted); line-height:1.6; }
+    .meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .pill { padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:13px; background:rgba(255,255,255,.03); }
+    .kpi { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-top:14px; }
+    .mini { background: var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:12px; }
+    .mini strong { display:block; font-size:22px; color:var(--text); margin-top:4px; }
+    .tabs { display:flex; gap:10px; flex-wrap:wrap; margin: 18px 0 14px; }
+    .tab { cursor:pointer; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; }
+    .tab.active { color:var(--text); background:#20305e; }
+    .sheet { display:none; }
+    .sheet.active { display:block; }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { color:var(--text); font-size:13px; }
+    td { color:var(--muted); font-size:14px; }
+    .status { font-size:12px; padding:5px 10px; border-radius:999px; font-weight:600; }
+    .green { background: rgba(34,197,94,.12); color:#86efac; }
+    .yellow { background: rgba(245,158,11,.12); color:#fcd34d; }
+    .red { background: rgba(239,68,68,.12); color:#fca5a5; }
+    .blue { background: rgba(96,165,250,.12); color:#93c5fd; }
+    .brand-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+    .tag { display:inline-block; margin:4px 6px 0 0; padding:5px 8px; border-radius:999px; background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; border:1px solid var(--line); }
+    .signal li { margin-bottom:10px; }
+    .muted { color:var(--muted); }
     .footer { margin-top: 18px; font-size: 12px; color: #8c96bf; }
-    .tag { display: inline-block; margin: 4px 6px 0 0; padding: 5px 8px; border-radius: 999px; background: rgba(255,255,255,.04); color: var(--muted); font-size: 12px; border: 1px solid var(--line); }
-    @media (max-width: 980px) {
-      .hero, .grid-4, .cols, .kpi { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 980px) { .hero,.grid-2,.grid-3,.kpi { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="card">
-        <h1>小红书品牌洞察 Dashboard</h1>
-        <p>日期：2026-03-17｜覆盖客户：Canva、优衣库、嘉实多、尤妮佳（苏菲 / 乐互宜 / 亦在）</p>
-        <div class="meta">
-          <span class="pill">数据源：小红书 MCP 实时搜索</span>
-          <span class="pill">用途：日报 / 晨会 / 品牌传播洞察</span>
-          <span class="pill">视角：中国市场 / 内容与用户表达</span>
-        </div>
-        <div class="kpi">
-          <div class="mini"><span>重点品牌</span><strong>6</strong></div>
-          <div class="mini"><span>风险品牌</span><strong>1</strong></div>
-          <div class="mini"><span>需修正关键词</span><strong>2</strong></div>
-          <div class="mini"><span>今日重点信号</span><strong>5</strong></div>
-        </div>
+<div class="wrap">
+  <section class="hero">
+    <div class="card">
+      <h1>小红书品牌洞察 Dashboard</h1>
+      <p>正式版｜品牌分 sheet / 分页签｜数据日期：2026-03-17</p>
+      <div class="meta">
+        <span class="pill">数据源：xiaohongshu-mcp 实时抓取</span>
+        <span class="pill">覆盖：Canva｜优衣库｜嘉实多｜苏菲｜乐互宜｜亦在</span>
+        <span class="pill">用途：晨会 / 日报 / 品牌传播策略洞察</span>
       </div>
-      <div class="card">
-        <h2>今日最值得关注的 3 个信号</h2>
-        <ol class="signals">
-          <li><strong>优衣库：</strong>内容中心仍是“单品清单 + 搭配效率 + 红黑榜”，这说明它在小红书的核心价值不是品牌认知，而是决策效率。</li>
-          <li><strong>Canva：</strong>“效率神器”和“难用避雷”并存，品牌增长机会与体验风险同步暴露。</li>
-          <li><strong>苏菲：</strong>负面安全联想压过传播机会，当前应优先把风险监测放到内容洞察之前。</li>
-        </ol>
+      <div class="kpi">
+        <div class="mini"><span>品牌页签</span><strong>6</strong></div>
+        <div class="mini"><span>可用样本充分</span><strong>4</strong></div>
+        <div class="mini"><span>关键词需修正</span><strong>2</strong></div>
+        <div class="mini"><span>风险重点</span><strong>1</strong></div>
       </div>
-    </section>
-
-    <section class="card" style="margin-bottom:16px;">
-      <h2>今日总览</h2>
-      <table>
-        <thead>
-          <tr><th>品牌</th><th>今日判断</th><th>核心内容方向</th><th>这意味着什么</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Canva</td><td>观察</td><td>AI做图 / 一键PPT / 效率教程 / 难用避雷</td><td>传播机会在“任务完成效率”，风险点在产品体验口碑。</td></tr>
-          <tr><td>优衣库</td><td>强势</td><td>单品推荐 / 宝藏清单 / 联名排行 / 早春基础款</td><td>适合持续做“决策效率型内容雷达”，优先看高收藏内容。</td></tr>
-          <tr><td>嘉实多</td><td>偏弱</td><td>代言人 / 赛车联想 / 服务体验 / 行业消息</td><td>自然心智尚未牢牢占住“养车决策入口”，需补问题场景词。</td></tr>
-          <tr><td>苏菲</td><td>风险预警</td><td>虫子 / 避雷 / 安睡裤安全性</td><td>当前需优先监测风险与信任修复，不宜只看常规传播动作。</td></tr>
-          <tr><td>乐互宜</td><td>待优化</td><td>品牌词噪音大 / 需叠加品类词</td><td>不适合单独用品牌词，需改为“失禁护理/老人护理”等场景追踪。</td></tr>
-          <tr><td>亦在</td><td>待优化</td><td>关键词歧义高 / 结果不干净</td><td>必须重建关键词体系，否则日报会持续失真。</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="grid-4">
-      <article class="brand-card">
-        <div class="brand-top">
-          <h2>Canva</h2>
-          <span class="status yellow">观察</span>
-        </div>
-        <p>核心话题：AI做图 / 一键PPT / 教程效率 / 可画难用 / 团队会员避雷</p>
-        <div class="cols">
-          <div class="mini">
-            <h3>高互动样本</h3>
-            <ul>
-              <li>搞钱攻略！25岁创立Canva估值400亿美元</li>
-              <li>AI测评01丨Canva可画一键PPT教程</li>
-              <li>可画真难用</li>
-              <li>避雷可画团队会员</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>传播启示</h3>
-            <ul>
-              <li>用户把 Canva 当作“非专业设计效率工具”</li>
-              <li>应强化“做成一件事”的内容，而不是空泛讲设计平台</li>
-              <li>需持续监测负面体验词：难用、会员、协作、卡顿</li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <span class="tag">AI做图</span><span class="tag">一键PPT</span><span class="tag">效率工具</span><span class="tag">难用避雷</span>
-        </div>
-      </article>
-
-      <article class="brand-card">
-        <div class="brand-top">
-          <h2>优衣库</h2>
-          <span class="status green">强势</span>
-        </div>
-        <p>核心话题：宝藏单品 / 红黑榜 / 联名排行 / C系列 / 早春基础款 / 穿搭效率</p>
-        <div class="cols">
-          <div class="mini">
-            <h3>高互动样本</h3>
-            <ul>
-              <li>优衣库真正的宝藏永远在犄角旮旯</li>
-              <li>优衣库无广真感受｜测10件，早春新品基础款！</li>
-              <li>优衣库C系列26春夏：推荐这6款</li>
-              <li>优衣库红黑榜｜3件封神单品+3件劝退清单</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>传播启示</h3>
-            <ul>
-              <li>小红书用户讨论的是“买什么、怎么搭、值不值”</li>
-              <li>优衣库内容资产核心是“低风险选择 + 高搭配效率”</li>
-              <li>日报应重点加入：单品榜、联名榜、季节场景榜</li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <span class="tag">宝藏单品</span><span class="tag">红黑榜</span><span class="tag">联名排行</span><span class="tag">穿搭效率</span>
-        </div>
-      </article>
-
-      <article class="brand-card">
-        <div class="brand-top">
-          <h2>嘉实多</h2>
-          <span class="status yellow">偏弱</span>
-        </div>
-        <p>核心话题：王一博 / 赛车联想 / 服务门店 / 行业消息</p>
-        <div class="cols">
-          <div class="mini">
-            <h3>高互动样本</h3>
-            <ul>
-              <li>王一博的嘉实多人形立牌</li>
-              <li>嘉实多logo出现在王一博赛车上意味着什么</li>
-              <li>嘉实多汽车服务尊享店精细洗车体验</li>
-              <li>嘉实多被卖壳牌撤退，润滑油还是好生意吗？</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>传播启示</h3>
-            <ul>
-              <li>品牌讨论未充分进入“养车问题解决”场景</li>
-              <li>需要补追踪词：换机油 / 保养避坑 / 机油推荐 / 冷启动</li>
-              <li>建议从“赛事背书”延展到“日常养车决策”</li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <span class="tag">王一博</span><span class="tag">赛车</span><span class="tag">服务体验</span><span class="tag">行业变动</span>
-        </div>
-      </article>
-
-      <article class="brand-card">
-        <div class="brand-top">
-          <h2>苏菲</h2>
-          <span class="status red">风险预警</span>
-        </div>
-        <p>核心话题：虫子 / 活虫事件 / 安睡裤 / 避雷</p>
-        <div class="cols">
-          <div class="mini">
-            <h3>高关注样本</h3>
-            <ul>
-              <li>避雷！苏菲卫生巾又爆虫子</li>
-              <li>苏菲安睡裤惊现虫！！</li>
-              <li>苏菲活虫事件</li>
-              <li>少量正向内容未形成主导</li>
-            </ul>
-          </div>
-          <div class="mini">
-            <h3>传播启示</h3>
-            <ul>
-              <li>当前优先级不是创意表达，而是风险信号监测</li>
-              <li>安全、信任、品质感知已成为首要问题</li>
-              <li>日报应单列“风险雷达”模块，按天追踪负面词</li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <span class="tag">虫子</span><span class="tag">安睡裤</span><span class="tag">避雷</span><span class="tag">信任修复</span>
-        </div>
-      </article>
-    </section>
-
-    <section class="card" style="margin-top:16px;">
-      <h2>关键词体系调整建议（正式日报前必须修正）</h2>
-      <table>
-        <thead>
-          <tr><th>品牌</th><th>现状</th><th>问题</th><th>建议关键词结构</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>乐互宜</td><td>结果噪音偏高</td><td>单品牌词讨论量与识别度不足</td><td>乐互宜 + 失禁护理 / 成人纸尿裤 / 老人护理 / 夜间护理 / 护理垫</td></tr>
-          <tr><td>亦在</td><td>歧义极高</td><td>单品牌词无法有效锁定品牌语境</td><td>需补产品线名 / 官方常用表达 / 细分品类词后再追踪</td></tr>
-          <tr><td>嘉实多</td><td>品牌词偏代言与赛事</td><td>看不见真实养车问题</td><td>嘉实多 + 换机油 / 保养 / 冷启动 / 发动机 / 机油推荐</td></tr>
-          <tr><td>Canva</td><td>品牌词有效但不完整</td><td>易漏掉任务场景需求</td><td>Canva可画 + 做PPT / 做海报 / 做简历 / 新媒体作图 / 模板</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="card" style="margin-top:16px;">
-      <h2>明日开始建议固定追踪的栏目</h2>
-      <div class="cols">
-        <div class="mini">
-          <h3>栏目 1｜热词变化</h3>
-          <ul>
-            <li>新增热词</li>
-            <li>连续上升词</li>
-            <li>新增问题词</li>
-          </ul>
-        </div>
-        <div class="mini">
-          <h3>栏目 2｜高互动内容榜</h3>
-          <ul>
-            <li>高赞 Top3</li>
-            <li>高藏 Top3</li>
-            <li>高评 Top3</li>
-          </ul>
-        </div>
-        <div class="mini">
-          <h3>栏目 3｜风险雷达</h3>
-          <ul>
-            <li>负面词波动</li>
-            <li>突发舆情</li>
-            <li>评论区异常情绪</li>
-          </ul>
-        </div>
-        <div class="mini">
-          <h3>栏目 4｜一句话行动建议</h3>
-          <ul>
-            <li>今天最该关注什么</li>
-            <li>今天内容团队该跟什么</li>
-            <li>今天策略团队该验证什么</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <div class="footer">
-      本页为日报 dashboard 样张。基于 2026-03-17 当日小红书实时搜索结果快速生成，适合晨间浏览与策略讨论，不等同于完整研究报告。
     </div>
+    <div class="card">
+      <h2>今日最值得关注的 3 个信号</h2>
+      <ol class="signal">
+        <li><strong>优衣库：</strong>高互动内容继续集中在“宝藏单品 / 早春基础款 / C系列推荐”，说明平台价值仍是“购买决策效率”。</li>
+        <li><strong>苏菲：</strong>品牌官方内容存在，但仍被“避雷 / 活虫 / 315”类内容压住，风险监测优先级高于常规种草观察。</li>
+        <li><strong>嘉实多：</strong>品牌词结果仍偏王一博/赛车/门店服务，用户真实养车问题没有被品牌词充分带出，后续必须引入问题场景词。</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>总览面板</h2>
+    <table>
+      <thead><tr><th>品牌</th><th>今日状态</th><th>高频内容</th><th>策略判断</th></tr></thead>
+      <tbody>
+        <tr><td>Canva</td><td>待修正关键词</td><td>品牌词本轮 0 结果</td><td>需从“Canva可画”切到任务词：做PPT/做海报/模板/新媒体作图。</td></tr>
+        <tr><td>优衣库</td><td>强势</td><td>单品清单 / 早春基础款 / C系列 / 红黑榜</td><td>最适合做“决策效率型内容 dashboard”。</td></tr>
+        <tr><td>嘉实多</td><td>观察</td><td>王一博 / 赛车 / 门店服务 / 行业消息</td><td>需补“换机油/保养/冷启动”等问题场景词。</td></tr>
+        <tr><td>苏菲</td><td>风险预警</td><td>315 / 活虫 / 避雷 / 官方回应</td><td>优先做风险雷达与信任修复监测。</td></tr>
+        <tr><td>乐互宜</td><td>可用</td><td>失禁护理 / 老人照护 / 尊严 / 尿失禁教育</td><td>品牌词要与品类词绑定，才能看见真实照护场景。</td></tr>
+        <tr><td>亦在</td><td>待修正关键词</td><td>本轮 0 结果</td><td>当前品牌词无效，需重建词库（产品名/品类词/官方表达）。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" data-sheet="sheet-overview">总览</button>
+    <button class="tab" data-sheet="sheet-uniqlo">优衣库</button>
+    <button class="tab" data-sheet="sheet-canva">Canva</button>
+    <button class="tab" data-sheet="sheet-castrol">嘉实多</button>
+    <button class="tab" data-sheet="sheet-sofy">苏菲</button>
+    <button class="tab" data-sheet="sheet-lifree">乐互宜</button>
+    <button class="tab" data-sheet="sheet-yizai">亦在</button>
   </div>
+
+  <section id="sheet-overview" class="sheet active">
+    <div class="grid-3">
+      <div class="card"><h3>优衣库</h3><p>最新样本里，高赞高藏依旧围绕“宝藏单品、基础款、C系列、红黑榜”。用户在平台上的真实任务是：<strong>怎么买更对、怎么穿更值</strong>。</p></div>
+      <div class="card"><h3>嘉实多</h3><p>品牌词仍主要卷入代言人与赛车联想，说明品牌在小红书尚未自然占领“养车问题解决”入口。<strong>品牌词 ≠ 问题词</strong>。</p></div>
+      <div class="card"><h3>苏菲</h3><p>官方内容能见度存在，但“315、活虫、避雷、道歉”话题仍然显著。当前舆论重点不是内容创新，而是<strong>信任与品质感知</strong>。</p></div>
+    </div>
+  </section>
+
+  <section id="sheet-uniqlo" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>优衣库</h2><span class="status green">强势</span></div>
+      <p>关键词：优衣库</p>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>高互动样本</h3>
+          <ul>
+            <li>优衣库无广真感受｜测10件，早春新品基础款！（14886赞 / 7126藏 / 448评）</li>
+            <li>优衣库真正的宝藏永远在犄角旮旯（7315赞 / 4172藏 / 248评）</li>
+            <li>优衣库C系列26春夏：推荐这6款（2777赞 / 1645藏 / 50评）</li>
+            <li>春日不穿卫衣穿什么？！ （3001赞 / 1059藏 / 145评）</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>今日判断</h3>
+          <ul>
+            <li>小红书里优衣库依旧是“怎么买、买哪件、值不值”的品牌。</li>
+            <li>高收藏显著高于高评论，说明它是强决策、强清单型内容品类。</li>
+            <li>联名与系列款（如 C 系列）仍是放大讨论的有效抓手。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini" style="margin-top:12px;">
+        <h3>传播启示</h3>
+        <p>日报里应单独追踪：<strong>单品榜、季节场景榜、联名热度榜</strong>。优衣库最不该做的是空泛品牌表达，最该做的是“降低选择成本”的内容结构。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sheet-canva" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>Canva</h2><span class="status yellow">待修正关键词</span></div>
+      <p>关键词：Canva可画</p>
+      <div class="mini">
+        <h3>本轮结果</h3>
+        <p><strong>0 条有效结果</strong>。这不是说明品牌没讨论，而更可能说明：<strong>品牌词不适合作为当前主监测词</strong>。</p>
+      </div>
+      <div class="grid-2" style="margin-top:12px;">
+        <div class="mini">
+          <h3>判断</h3>
+          <ul>
+            <li>Canva 在小红书更可能被任务场景词带出，而不是纯品牌词。</li>
+            <li>用户讨论往往围绕：做PPT、做海报、模板、简历、新媒体作图、AI做图。</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>下一轮建议词</h3>
+          <ul>
+            <li>Canva 做PPT</li>
+            <li>Canva 模板</li>
+            <li>可画 海报</li>
+            <li>新媒体作图</li>
+            <li>不会设计 做图</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sheet-castrol" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>嘉实多</h2><span class="status yellow">观察</span></div>
+      <p>关键词：嘉实多</p>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>高互动样本</h3>
+          <ul>
+            <li>实践出真知（8807赞 / 2403藏 / 193评）</li>
+            <li>嘉实多9785（1790赞 / 39藏 / 163评）</li>
+            <li>穿搭不从众｜来看王一博赛车（1313赞 / 87藏 / 71评）</li>
+            <li>王一博的嘉实多人形立牌（70赞 / 6藏 / 25评）</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>今日判断</h3>
+          <ul>
+            <li>品牌讨论仍被代言人/赛车联想牵引。</li>
+            <li>服务店体验有零散内容，但未形成“养车决策知识场”。</li>
+            <li>单搜品牌词，看不到足够多真实机油决策问题。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini" style="margin-top:12px;">
+        <h3>传播启示</h3>
+        <p>嘉实多下一步在小红书不应只监测“品牌露出”，而应扩展到：<strong>换机油、保养避坑、机油推荐、冷启动、发动机声音</strong>。这样才能把小红书变成“问题洞察场”，而不是“代言露出场”。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sheet-sofy" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>苏菲</h2><span class="status red">风险预警</span></div>
+      <p>关键词：苏菲</p>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>高关注样本</h3>
+          <ul>
+            <li>安心裤拆出活虫，苏菲品牌方负责人鞠躬道歉（2228赞 / 190藏 / 488评）</li>
+            <li>315曝光的苏菲到现在自己死活不承认</li>
+            <li>苏菲安睡裤惊现虫！！</li>
+            <li>与苏菲翼起守护女性健康，让安心看得见（官方）</li>
+            <li>品牌营销对比：自由点 vs 苏菲投放策略效果</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>今日判断</h3>
+          <ul>
+            <li>负面内容仍然显著，且与 315 / 虫 / 安睡裤 安全性强相关。</li>
+            <li>官方内容存在，但没有完全压住负面联想。</li>
+            <li>评论与媒体转述类内容让风险持续可见。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini" style="margin-top:12px;">
+        <h3>传播启示</h3>
+        <p>苏菲日报应拆成两层：<strong>品牌传播动态</strong> 与 <strong>风险雷达</strong>。当前阶段，后者优先级更高。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sheet-lifree" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>乐互宜</h2><span class="status blue">可用</span></div>
+      <p>关键词：乐互宜 失禁护理</p>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>高相关内容方向</h3>
+          <ul>
+            <li>卧床老人拒绝穿纸尿裤，怎么办？</li>
+            <li>住院时期的“屎尿屁尊严” 我花了368天才夺回</li>
+            <li>给妈妈买的漏尿垫</li>
+            <li>解决失能老人白天大小便问题最优解！</li>
+            <li>尿失禁的尴尬：从训练到手术</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>今日判断</h3>
+          <ul>
+            <li>一旦绑定“失禁护理/老人照护”场景，内容价值就出来了。</li>
+            <li>用户讨论不只是产品，而是尊严、照护负担、长期护理现实。</li>
+            <li>这是典型的“场景词 > 品牌词”的品类。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini" style="margin-top:12px;">
+        <h3>传播启示</h3>
+        <p>乐互宜在小红书的突破口，不是泛品牌曝光，而是：<strong>照护者视角、夜间护理、老人尊严、家庭压力缓解</strong>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sheet-yizai" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>亦在</h2><span class="status yellow">待修正关键词</span></div>
+      <p>关键词：亦在 卫生巾</p>
+      <div class="mini">
+        <h3>本轮结果</h3>
+        <p><strong>0 条有效结果</strong>。当前检索词不足以代表品牌实际讨论面。</p>
+      </div>
+      <div class="grid-2" style="margin-top:12px;">
+        <div class="mini">
+          <h3>判断</h3>
+          <ul>
+            <li>品牌词辨识度不足或用户不按此词搜索。</li>
+            <li>如果继续用当前词，日报会长期失真。</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>下一轮建议词</h3>
+          <ul>
+            <li>亦在 + 官方产品名</li>
+            <li>亦在 + 品类词</li>
+            <li>亦在 + 官方 slogan / 系列名</li>
+            <li>用户常用简称 / 俗称</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">说明：本版本已升级为品牌分 sheet / 分页签形式。当前数据基于 2026-03-17 当日实时抓取。Canva 与亦在因关键词命中不足，已在对应页签中标注为“需修正词库”。</div>
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const sheets = document.querySelectorAll('.sheet');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    sheets.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.sheet).classList.add('active');
+  }));
+</script>
 </body>
 </html>
