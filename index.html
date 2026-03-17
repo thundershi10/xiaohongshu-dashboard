@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小红书品牌洞察 Dashboard | 2026-03-17</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #17203f;
+      --text: #eef2ff;
+      --muted: #a7b0d6;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --blue: #60a5fa;
+      --line: #2b3767;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #0a1020 0%, #10182d 100%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1440px; margin: 0 auto; padding: 28px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr .9fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: rgba(18, 25, 51, .92);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.22);
+    }
+    h1 { margin: 0 0 10px; font-size: 30px; }
+    h2 { margin: 0 0 12px; font-size: 20px; }
+    h3 { margin: 0 0 10px; font-size: 16px; }
+    p, li { color: var(--muted); line-height: 1.6; }
+    .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .pill {
+      padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px;
+      color: var(--muted); font-size: 13px; background: rgba(255,255,255,.03);
+    }
+    .signals li { margin-bottom: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .brand-card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+    .brand-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .status { font-size: 12px; padding: 5px 10px; border-radius: 999px; font-weight: 600; }
+    .green { background: rgba(34,197,94,.12); color: #86efac; }
+    .yellow { background: rgba(245,158,11,.12); color: #fcd34d; }
+    .red { background: rgba(239,68,68,.12); color: #fca5a5; }
+    .blue { background: rgba(96,165,250,.12); color: #93c5fd; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mini { background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+    .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 10px; }
+    .kpi .mini strong { font-size: 22px; display: block; color: var(--text); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--text); font-size: 13px; }
+    td { color: var(--muted); font-size: 14px; }
+    .footer { margin-top: 18px; font-size: 12px; color: #8c96bf; }
+    .tag { display: inline-block; margin: 4px 6px 0 0; padding: 5px 8px; border-radius: 999px; background: rgba(255,255,255,.04); color: var(--muted); font-size: 12px; border: 1px solid var(--line); }
+    @media (max-width: 980px) {
+      .hero, .grid-4, .cols, .kpi { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="card">
+        <h1>小红书品牌洞察 Dashboard</h1>
+        <p>日期：2026-03-17｜覆盖客户：Canva、优衣库、嘉实多、尤妮佳（苏菲 / 乐互宜 / 亦在）</p>
+        <div class="meta">
+          <span class="pill">数据源：小红书 MCP 实时搜索</span>
+          <span class="pill">用途：日报 / 晨会 / 品牌传播洞察</span>
+          <span class="pill">视角：中国市场 / 内容与用户表达</span>
+        </div>
+        <div class="kpi">
+          <div class="mini"><span>重点品牌</span><strong>6</strong></div>
+          <div class="mini"><span>风险品牌</span><strong>1</strong></div>
+          <div class="mini"><span>需修正关键词</span><strong>2</strong></div>
+          <div class="mini"><span>今日重点信号</span><strong>5</strong></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>今日最值得关注的 3 个信号</h2>
+        <ol class="signals">
+          <li><strong>优衣库：</strong>内容中心仍是“单品清单 + 搭配效率 + 红黑榜”，这说明它在小红书的核心价值不是品牌认知，而是决策效率。</li>
+          <li><strong>Canva：</strong>“效率神器”和“难用避雷”并存，品牌增长机会与体验风险同步暴露。</li>
+          <li><strong>苏菲：</strong>负面安全联想压过传播机会，当前应优先把风险监测放到内容洞察之前。</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px;">
+      <h2>今日总览</h2>
+      <table>
+        <thead>
+          <tr><th>品牌</th><th>今日判断</th><th>核心内容方向</th><th>这意味着什么</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Canva</td><td>观察</td><td>AI做图 / 一键PPT / 效率教程 / 难用避雷</td><td>传播机会在“任务完成效率”，风险点在产品体验口碑。</td></tr>
+          <tr><td>优衣库</td><td>强势</td><td>单品推荐 / 宝藏清单 / 联名排行 / 早春基础款</td><td>适合持续做“决策效率型内容雷达”，优先看高收藏内容。</td></tr>
+          <tr><td>嘉实多</td><td>偏弱</td><td>代言人 / 赛车联想 / 服务体验 / 行业消息</td><td>自然心智尚未牢牢占住“养车决策入口”，需补问题场景词。</td></tr>
+          <tr><td>苏菲</td><td>风险预警</td><td>虫子 / 避雷 / 安睡裤安全性</td><td>当前需优先监测风险与信任修复，不宜只看常规传播动作。</td></tr>
+          <tr><td>乐互宜</td><td>待优化</td><td>品牌词噪音大 / 需叠加品类词</td><td>不适合单独用品牌词，需改为“失禁护理/老人护理”等场景追踪。</td></tr>
+          <tr><td>亦在</td><td>待优化</td><td>关键词歧义高 / 结果不干净</td><td>必须重建关键词体系，否则日报会持续失真。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid-4">
+      <article class="brand-card">
+        <div class="brand-top">
+          <h2>Canva</h2>
+          <span class="status yellow">观察</span>
+        </div>
+        <p>核心话题：AI做图 / 一键PPT / 教程效率 / 可画难用 / 团队会员避雷</p>
+        <div class="cols">
+          <div class="mini">
+            <h3>高互动样本</h3>
+            <ul>
+              <li>搞钱攻略！25岁创立Canva估值400亿美元</li>
+              <li>AI测评01丨Canva可画一键PPT教程</li>
+              <li>可画真难用</li>
+              <li>避雷可画团队会员</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>传播启示</h3>
+            <ul>
+              <li>用户把 Canva 当作“非专业设计效率工具”</li>
+              <li>应强化“做成一件事”的内容，而不是空泛讲设计平台</li>
+              <li>需持续监测负面体验词：难用、会员、协作、卡顿</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <span class="tag">AI做图</span><span class="tag">一键PPT</span><span class="tag">效率工具</span><span class="tag">难用避雷</span>
+        </div>
+      </article>
+
+      <article class="brand-card">
+        <div class="brand-top">
+          <h2>优衣库</h2>
+          <span class="status green">强势</span>
+        </div>
+        <p>核心话题：宝藏单品 / 红黑榜 / 联名排行 / C系列 / 早春基础款 / 穿搭效率</p>
+        <div class="cols">
+          <div class="mini">
+            <h3>高互动样本</h3>
+            <ul>
+              <li>优衣库真正的宝藏永远在犄角旮旯</li>
+              <li>优衣库无广真感受｜测10件，早春新品基础款！</li>
+              <li>优衣库C系列26春夏：推荐这6款</li>
+              <li>优衣库红黑榜｜3件封神单品+3件劝退清单</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>传播启示</h3>
+            <ul>
+              <li>小红书用户讨论的是“买什么、怎么搭、值不值”</li>
+              <li>优衣库内容资产核心是“低风险选择 + 高搭配效率”</li>
+              <li>日报应重点加入：单品榜、联名榜、季节场景榜</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <span class="tag">宝藏单品</span><span class="tag">红黑榜</span><span class="tag">联名排行</span><span class="tag">穿搭效率</span>
+        </div>
+      </article>
+
+      <article class="brand-card">
+        <div class="brand-top">
+          <h2>嘉实多</h2>
+          <span class="status yellow">偏弱</span>
+        </div>
+        <p>核心话题：王一博 / 赛车联想 / 服务门店 / 行业消息</p>
+        <div class="cols">
+          <div class="mini">
+            <h3>高互动样本</h3>
+            <ul>
+              <li>王一博的嘉实多人形立牌</li>
+              <li>嘉实多logo出现在王一博赛车上意味着什么</li>
+              <li>嘉实多汽车服务尊享店精细洗车体验</li>
+              <li>嘉实多被卖壳牌撤退，润滑油还是好生意吗？</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>传播启示</h3>
+            <ul>
+              <li>品牌讨论未充分进入“养车问题解决”场景</li>
+              <li>需要补追踪词：换机油 / 保养避坑 / 机油推荐 / 冷启动</li>
+              <li>建议从“赛事背书”延展到“日常养车决策”</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <span class="tag">王一博</span><span class="tag">赛车</span><span class="tag">服务体验</span><span class="tag">行业变动</span>
+        </div>
+      </article>
+
+      <article class="brand-card">
+        <div class="brand-top">
+          <h2>苏菲</h2>
+          <span class="status red">风险预警</span>
+        </div>
+        <p>核心话题：虫子 / 活虫事件 / 安睡裤 / 避雷</p>
+        <div class="cols">
+          <div class="mini">
+            <h3>高关注样本</h3>
+            <ul>
+              <li>避雷！苏菲卫生巾又爆虫子</li>
+              <li>苏菲安睡裤惊现虫！！</li>
+              <li>苏菲活虫事件</li>
+              <li>少量正向内容未形成主导</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>传播启示</h3>
+            <ul>
+              <li>当前优先级不是创意表达，而是风险信号监测</li>
+              <li>安全、信任、品质感知已成为首要问题</li>
+              <li>日报应单列“风险雷达”模块，按天追踪负面词</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <span class="tag">虫子</span><span class="tag">安睡裤</span><span class="tag">避雷</span><span class="tag">信任修复</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:16px;">
+      <h2>关键词体系调整建议（正式日报前必须修正）</h2>
+      <table>
+        <thead>
+          <tr><th>品牌</th><th>现状</th><th>问题</th><th>建议关键词结构</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>乐互宜</td><td>结果噪音偏高</td><td>单品牌词讨论量与识别度不足</td><td>乐互宜 + 失禁护理 / 成人纸尿裤 / 老人护理 / 夜间护理 / 护理垫</td></tr>
+          <tr><td>亦在</td><td>歧义极高</td><td>单品牌词无法有效锁定品牌语境</td><td>需补产品线名 / 官方常用表达 / 细分品类词后再追踪</td></tr>
+          <tr><td>嘉实多</td><td>品牌词偏代言与赛事</td><td>看不见真实养车问题</td><td>嘉实多 + 换机油 / 保养 / 冷启动 / 发动机 / 机油推荐</td></tr>
+          <tr><td>Canva</td><td>品牌词有效但不完整</td><td>易漏掉任务场景需求</td><td>Canva可画 + 做PPT / 做海报 / 做简历 / 新媒体作图 / 模板</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top:16px;">
+      <h2>明日开始建议固定追踪的栏目</h2>
+      <div class="cols">
+        <div class="mini">
+          <h3>栏目 1｜热词变化</h3>
+          <ul>
+            <li>新增热词</li>
+            <li>连续上升词</li>
+            <li>新增问题词</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>栏目 2｜高互动内容榜</h3>
+          <ul>
+            <li>高赞 Top3</li>
+            <li>高藏 Top3</li>
+            <li>高评 Top3</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>栏目 3｜风险雷达</h3>
+          <ul>
+            <li>负面词波动</li>
+            <li>突发舆情</li>
+            <li>评论区异常情绪</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>栏目 4｜一句话行动建议</h3>
+          <ul>
+            <li>今天最该关注什么</li>
+            <li>今天内容团队该跟什么</li>
+            <li>今天策略团队该验证什么</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      本页为日报 dashboard 样张。基于 2026-03-17 当日小红书实时搜索结果快速生成，适合晨间浏览与策略讨论，不等同于完整研究报告。
+    </div>
+  </div>
+</body>
+</html>
