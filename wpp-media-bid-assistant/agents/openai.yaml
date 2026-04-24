@@ -1,0 +1,4 @@
+interface:
+  display_name: "WPP比稿助手"
+  short_description: "为GPT/Claude生成结构化WPP Media比稿方案并导出Gamma"
+  default_prompt: "请基于WPP Media方法论，为品牌生成Discovery-Strategy-Execution-Measurement完整比稿方案，并附Gamma页纲。"
