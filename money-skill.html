@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>money.skill ｜ 个人技能 → 数字产品 → 被动收入</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #17203f;
+      --text: #eef2ff;
+      --muted: #a7b0d6;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --line: #2b3767;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif; background: linear-gradient(180deg,#0a1020 0%,#10182d 100%); color: var(--text); }
+    .wrap { max-width: 1480px; margin: 0 auto; padding: 28px; }
+    .card { background: rgba(18,25,51,.94); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: 0 8px 30px rgba(0,0,0,.22); }
+    .hero { display:grid; grid-template-columns: 1.35fr .95fr; gap: 16px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:0 0 12px; font-size:20px; }
+    h3 { margin:0 0 10px; font-size:16px; }
+    h4 { margin:0 0 8px; font-size:14px; color: var(--text); }
+    p, li { color: var(--muted); line-height:1.6; }
+    .meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .pill { padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:13px; background:rgba(255,255,255,.03); }
+    .kpi { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-top:14px; }
+    .mini { background: var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:14px; }
+    .mini strong { display:block; font-size:22px; color:var(--text); margin-top:4px; }
+    .tabs { display:flex; gap:10px; flex-wrap:wrap; margin: 18px 0 14px; }
+    .tab { cursor:pointer; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; }
+    .tab.active { color:var(--text); background:#20305e; }
+    .sheet { display:none; }
+    .sheet.active { display:block; }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+    .grid-5 { display:grid; grid-template-columns: repeat(5,1fr); gap:12px; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { color:var(--text); font-size:13px; }
+    td { color:var(--muted); font-size:14px; }
+    .status { font-size:12px; padding:5px 10px; border-radius:999px; font-weight:600; display:inline-block; }
+    .green { background: rgba(34,197,94,.12); color:#86efac; }
+    .yellow { background: rgba(245,158,11,.12); color:#fcd34d; }
+    .red { background: rgba(239,68,68,.12); color:#fca5a5; }
+    .blue { background: rgba(96,165,250,.12); color:#93c5fd; }
+    .purple { background: rgba(167,139,250,.14); color:#c4b5fd; }
+    .brand-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap; }
+    .tag { display:inline-block; margin:4px 6px 0 0; padding:5px 8px; border-radius:999px; background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; border:1px solid var(--line); }
+    .slot { display:inline-block; padding:1px 6px; border-radius:6px; background: rgba(167,139,250,.16); color:#ddd6fe; border:1px solid rgba(167,139,250,.35); font-size:13px; }
+    .prompt-box { background:#0c1430; border:1px solid var(--line); border-radius:12px; padding:14px; font-size:13.5px; color:#dbe2ff; line-height:1.7; white-space:pre-wrap; }
+    .copy { cursor:pointer; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--muted); font-size:12px; }
+    .copy:hover { color:var(--text); background:#1a2548; }
+    .path { display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-top:10px; }
+    .step { background: var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:12px; position:relative; }
+    .step .num { font-size:12px; color:var(--muted); }
+    .step .name { font-size:15px; color:var(--text); font-weight:600; margin-top:2px; }
+    .step .ps { margin-top:8px; font-size:12px; color:var(--muted); }
+    .signal li { margin-bottom:10px; }
+    .muted { color:var(--muted); }
+    .footer { margin-top: 18px; font-size: 12px; color: #8c96bf; }
+    .prompt-card { margin-top:14px; }
+    .row-2 { display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:12px; }
+    .row-3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; margin-top:12px; }
+    @media (max-width: 980px) { .hero,.grid-2,.grid-3,.grid-5,.path,.row-2,.row-3,.kpi { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="card">
+      <h1>money.skill</h1>
+      <p>个人技能 → 数字产品 → 被动收入系统｜10 prompt × 5 阶段的可执行框架</p>
+      <div class="meta">
+        <span class="pill">框架版本：v1.0</span>
+        <span class="pill">适用人群：有一项技能、想做被动收入的个人</span>
+        <span class="pill">交付方式：复制 prompt → 填槽 → 执行</span>
+      </div>
+      <div class="kpi">
+        <div class="mini"><span>prompt 总数</span><strong>10</strong></div>
+        <div class="mini"><span>阶段数</span><strong>5</strong></div>
+        <div class="mini"><span>产品阶梯层数</span><strong>4</strong></div>
+        <div class="mini"><span>最短上线周期</span><strong>7 天</strong></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>这套框架解决的 3 个问题</h2>
+      <ol class="signal">
+        <li><strong>不知道做什么：</strong>用 Prompt 1 / 5 / 7 从已有技能挖出 15+ 个产品点子。</li>
+        <li><strong>不知道能不能卖：</strong>用 Prompt 4 / 6 提前做需求验证与最快上线测试。</li>
+        <li><strong>不知道怎么卖：</strong>用 Prompt 3 / 8 / 9 / 10 完成阶梯、大纲、定价、平台选择。</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>五阶段路径总览</h2>
+    <div class="path">
+      <div class="step"><div class="num">阶段 1</div><div class="name">快速验证</div><div class="ps">Prompt 4 / 6 — 先看「能不能卖」，再决定「做什么」。</div></div>
+      <div class="step"><div class="num">阶段 2</div><div class="name">找产品机会</div><div class="ps">Prompt 1 / 5 / 7 — 从技能、用户问题、已有经验三个口子挖。</div></div>
+      <div class="step"><div class="num">阶段 3</div><div class="name">做产品设计</div><div class="ps">Prompt 2 / 3 / 8 — 从新手版到阶梯到完整大纲。</div></div>
+      <div class="step"><div class="num">阶段 4</div><div class="name">定价</div><div class="ps">Prompt 9 — 给出低 / 中 / 高三档策略与首发推荐价。</div></div>
+      <div class="step"><div class="num">阶段 5</div><div class="name">分发销售</div><div class="ps">Prompt 10 — 在 6 个平台中选最适合的那一个。</div></div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px;">
+    <h2>10 个 prompt 索引</h2>
+    <table>
+      <thead><tr><th>编号</th><th>名称</th><th>阶段</th><th>需要填的槽</th><th>产出</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>P1</td><td>从技能挖掘可盈利点</td><td>阶段 2</td><td>skill / level / audience</td><td>15 个产品点子（按变现速度排序）</td><td><span class="status purple">机会</span></td></tr>
+        <tr><td>P2</td><td>转化为新手数字产品</td><td>阶段 3</td><td>skill / audience</td><td>10 个无技术门槛方案</td><td><span class="status blue">设计</span></td></tr>
+        <tr><td>P3</td><td>4 层产品阶梯</td><td>阶段 3</td><td>skill / audience</td><td>低 / 中 / 高 / 订阅四层</td><td><span class="status blue">设计</span></td></tr>
+        <tr><td>P4</td><td>7 天最快上线</td><td>阶段 1</td><td>skill / X 小时 / audience</td><td>7 个方案 + 每日计划</td><td><span class="status green">验证</span></td></tr>
+        <tr><td>P5</td><td>匹配真实需求</td><td>阶段 2</td><td>skill / audience</td><td>15 个真问题 → 15 个产品</td><td><span class="status purple">机会</span></td></tr>
+        <tr><td>P6</td><td>市场验证打分</td><td>阶段 1</td><td>skill / audience</td><td>10 个点子 5 维打分 + 前 3 名</td><td><span class="status green">验证</span></td></tr>
+        <tr><td>P7</td><td>从已有经验挖产品</td><td>阶段 2</td><td>skill</td><td>10 个基于经验的产品</td><td><span class="status purple">机会</span></td></tr>
+        <tr><td>P8</td><td>完整产品大纲</td><td>阶段 3</td><td>audience / topic / product type</td><td>标题 / 模块 / 赠品 / 交付</td><td><span class="status blue">设计</span></td></tr>
+        <tr><td>P9</td><td>合理定价</td><td>阶段 4</td><td>product idea / audience</td><td>三档策略 + 推荐首发价</td><td><span class="status yellow">定价</span></td></tr>
+        <tr><td>P10</td><td>选销售平台</td><td>阶段 5</td><td>skill / product type / audience / goal</td><td>平台对比 + 推荐</td><td><span class="status red">分发</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" data-sheet="sheet-overview">总览</button>
+    <button class="tab" data-sheet="sheet-stage1">阶段 1 · 快速验证</button>
+    <button class="tab" data-sheet="sheet-stage2">阶段 2 · 找产品机会</button>
+    <button class="tab" data-sheet="sheet-stage3">阶段 3 · 做产品设计</button>
+    <button class="tab" data-sheet="sheet-stage4">阶段 4 · 定价</button>
+    <button class="tab" data-sheet="sheet-stage5">阶段 5 · 分发销售</button>
+    <button class="tab" data-sheet="sheet-howto">怎么用</button>
+  </div>
+
+  <!-- 总览 -->
+  <section id="sheet-overview" class="sheet active">
+    <div class="grid-3">
+      <div class="card">
+        <h3>本质</h3>
+        <p>这不是 10 个零散的 prompt，而是<strong>一条从「我会什么」到「我能卖什么」再到「我在哪卖」的最短路径</strong>。每一阶段的产出，是下一阶段的输入。</p>
+      </div>
+      <div class="card">
+        <h3>顺序建议</h3>
+        <p>新手建议路径：<strong>P6 → P4 → P1 → P7 → P5 → P3 → P2 → P8 → P9 → P10</strong>。<br/>先验证再设计，先小后大，先快速上线再做阶梯。</p>
+      </div>
+      <div class="card">
+        <h3>谁不适合用</h3>
+        <p>没有任何技能积累的人不适合。这个框架默认你已经在某件事上比 80% 的人更熟练，否则前几个 prompt 的输出会非常空。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 阶段 1 -->
+  <section id="sheet-stage1" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>阶段 1 · 快速验证</h2><span class="status green">先看能不能卖</span></div>
+      <p>在花一周时间做产品之前，先用这两个 prompt 验证「需求是否存在」和「最快能产出什么」。</p>
+
+      <div class="card prompt-card">
+        <div class="brand-head">
+          <h3>P4 · 7 天内可以上线的最快产品</h3>
+          <button class="copy" data-target="p4">复制 prompt</button>
+        </div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span> 你的技能　<span class="slot">[X]</span> 每天可投入小时数　<span class="slot">[audience]</span> 目标用户</p>
+            <h4>产出</h4>
+            <p>7 个可在 7 天内完成的产品方案，含：每日计划 / 所需工具 / 预计售价 / 难度 / 最佳推荐。</p>
+            <h4>什么时候用</h4>
+            <p>你想立刻动手、不想再陷在「想点子」里。</p>
+          </div>
+          <div class="prompt-box" id="p4">我想用 [skill] 在 7 天内做一个被动收入产品。我每天能投入 [X] 小时，目标用户是 [audience]。给我 7 个可以快速完成的产品方案。每个方案包含：每日制作计划、所需工具、预计售价、难度评估，并标出最适合快速出单的最佳方案。</div>
+        </div>
+      </div>
+
+      <div class="card prompt-card">
+        <div class="brand-head">
+          <h3>P6 · 验证哪些产品真的能卖钱</h3>
+          <button class="copy" data-target="p6">复制 prompt</button>
+        </div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>10 个产品点子 × 5 维度打分（需求 / 紧迫性 / 制作难度 / 差异化 / 购买可能性），并指出最快变现的 3 个。</p>
+            <h4>什么时候用</h4>
+            <p>你已经有一堆点子，但不知道哪个最值得做。</p>
+          </div>
+          <div class="prompt-box" id="p6">扮演市场验证研究员。我想基于 [skill] 向 [audience] 售卖被动收入产品。给我 10 个产品点子，并从需求、紧迫性、制作难度、差异化、购买可能性这 5 个维度打分（1-10 分）。最后指出最有可能最快变现的 3 个产品，并解释原因。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 阶段 2 -->
+  <section id="sheet-stage2" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>阶段 2 · 找产品机会</h2><span class="status purple">三种挖法</span></div>
+      <p>从三个不同的口子去找产品点子：<strong>技能本身 (P1)</strong> / <strong>用户真实问题 (P5)</strong> / <strong>已有经验 (P7)</strong>。三个一起用，重叠的点子最值得做。</p>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P1 · 从技能挖掘可盈利的被动收入点</h3><button class="copy" data-target="p1">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[beginner/intermediate/expert]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>15 个产品点子，含：产品 / 谁买 / 解决什么 / 难度 / 速度 / 平台，按「最容易赚钱 → 长期潜力最高」排序。</p>
+          </div>
+          <div class="prompt-box" id="p1">你是商业咨询策略师。我的技能是 [skill]，我的经验水平是 [beginner/intermediate/expert]，目标受众是 [audience]。给我 15 个可以基于这个技能打造的被动收入产品点子。每个点子需要包含：产品是什么、谁会买、解决什么问题、制作难度、上线速度、最适合的销售平台。并按"最容易赚钱 → 长期潜力最高"排序。</div>
+        </div>
+      </div>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P5 · 把技能匹配到真实需求</h3><button class="copy" data-target="p5">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>15 个用户「正在主动解决」的问题，每个问题转化成一个产品点子，含承诺改变和购买动机。</p>
+          </div>
+          <div class="prompt-box" id="p5">我具备 [skill]，目标用户是 [audience]。列出这个人群正在主动解决的 15 个真实问题，并基于这些问题转化为被动收入产品点子。每个点子需包含：问题、产品方案、承诺的改变结果，以及用户购买动机。</div>
+        </div>
+      </div>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P7 · 从已有经验中挖掘产品</h3><button class="copy" data-target="p7">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span></p>
+            <h4>产出</h4>
+            <p>从「常做的事 / 常解释的问题 / 常用捷径 / 常见错误 / 已有方法论」中提取 10 个产品，含形式 / 标题思路 / 目标用户。</p>
+          </div>
+          <div class="prompt-box" id="p7">我不想从 0 开始。帮我把已有的 [skill] 经验转化为产品。分析我经常做的事情、经常解释的问题、常用捷径、常见错误，以及已有的方法论。然后转化为 10 个被动收入产品，并附上产品形式、标题思路和目标用户。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 阶段 3 -->
+  <section id="sheet-stage3" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>阶段 3 · 做产品设计</h2><span class="status blue">从形态到大纲</span></div>
+      <p>把验证过的方向落到「具体长什么样」：先用 P2 做新手版形态，再用 P3 拉成产品阶梯，最后用 P8 写出可执行的内容大纲。</p>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P2 · 把一个技能转化为适合新手的数字产品</h3><button class="copy" data-target="p2">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>10 个无技术门槛方案，优先使用 Google Docs / Canva / Notion / 表格，含名称 / 形式 / 价格区间 / 制作步骤 / 为什么有人买。</p>
+          </div>
+          <div class="prompt-box" id="p2">帮我把 [skill] 转化为简单易做的数字产品，目标用户是 [audience]。给我 10 个不需要复杂技术的产品方案，优先使用 Google Docs、Canva、Notion 或表格等工具完成。每个方案包含：产品名称、形式、价格区间、制作步骤，以及为什么有人会买。</div>
+        </div>
+      </div>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P3 · 设计从低价到高价的产品阶梯</h3><button class="copy" data-target="p3">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>4 层阶梯（低 / 中 / 高 / 订阅），每层包含：卖什么 / 价格区间 / 交付形式 / 用户类型 / 怎么承接下一层。</p>
+          </div>
+          <div class="prompt-box" id="p3">扮演产品体系专家。我的技能是 [skill]，受众是 [audience]。帮我设计一个 4 层产品阶梯：低价、中价、高价数字产品和持续订阅。每一层都要自然承接下一层。每层需说明：卖什么、价格区间、交付形式、用户类型，以及如何引导到下一个产品。</div>
+        </div>
+      </div>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P8 · 生成完整产品大纲</h3><button class="copy" data-target="p8">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[audience]</span>　<span class="slot">[topic]</span>　<span class="slot">[product type]</span></p>
+            <h4>产出</h4>
+            <p>完整大纲：产品标题 / 核心承诺 / 模块结构 / 每部分内容 / 赠品 / 快速见效设计 / 交付形式。</p>
+          </div>
+          <div class="prompt-box" id="p8">我想为 [audience] 做一个关于 [topic] 的 [product type]。帮我生成完整大纲，包括：产品标题、核心承诺、模块结构、每一部分内容、附加赠品、快速见效设计，以及最终交付形式。要求简单实用、值得付费、避免学术化。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 阶段 4 -->
+  <section id="sheet-stage4" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>阶段 4 · 定价</h2><span class="status yellow">三档对比 + 首发推荐</span></div>
+      <p>定价不靠拍脑袋，而是拿一份三档对照表去选。前期出单优先选「转化逻辑最顺」的那一档，而不是利润最高的那一档。</p>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P9 · 给产品定一个合理价格</h3><button class="copy" data-target="p9">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[product idea]</span>　<span class="slot">[audience]</span></p>
+            <h4>产出</h4>
+            <p>低 / 中 / 高三档定价策略对比，含：包含什么 / 吸引谁 / 转化逻辑 / 优缺点 + 一个首发推荐价。</p>
+          </div>
+          <div class="prompt-box" id="p9">我有一个产品点子：[product idea]，目标用户是 [audience]。对比低价、中价、高价三种定价策略。分别说明每个价格应该包含什么、吸引哪类用户、转化逻辑，以及优缺点。最后给出一个适合前期快速出单的推荐价格。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 阶段 5 -->
+  <section id="sheet-stage5" class="sheet">
+    <div class="card">
+      <div class="brand-head"><h2>阶段 5 · 分发销售</h2><span class="status red">选一个，不要全做</span></div>
+      <p>新手最常见的错是同时上 5 个平台，结果哪个都做不起来。这个 prompt 帮你只选一个。</p>
+
+      <div class="card prompt-card">
+        <div class="brand-head"><h3>P10 · 选择最适合的销售平台</h3><button class="copy" data-target="p10">复制 prompt</button></div>
+        <div class="row-2">
+          <div>
+            <h4>需要填的槽</h4>
+            <p><span class="slot">[skill]</span>　<span class="slot">[product type]</span>　<span class="slot">[audience]</span>　<span class="slot">[goal]</span></p>
+            <h4>产出</h4>
+            <p>Gumroad / Etsy / Payhip / Shopify / Notion 市场 / 自建站 的对比 + 一条明确推荐。</p>
+          </div>
+          <div class="prompt-box" id="p10">我想卖一个与 [skill] 相关的被动收入产品。请对比 Gumroad、Etsy、Payhip、Shopify、Notion 市场或自建网站等平台。结合我的产品类型 [product type]、用户 [audience] 和目标 [goal]，推荐最适合的平台，并说明原因，包括手续费、搭建难度、流量潜力和新手友好度。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 怎么用 -->
+  <section id="sheet-howto" class="sheet">
+    <div class="card">
+      <h2>怎么用这套 prompt</h2>
+      <div class="row-3">
+        <div class="mini">
+          <h3>第一次用</h3>
+          <p>先跑 <strong>P6 + P4</strong>。在还没投入时间前，先确认有没有真实需求 + 能不能 7 天上线。</p>
+        </div>
+        <div class="mini">
+          <h3>已经有一堆点子</h3>
+          <p>跑 <strong>P6</strong> 做 5 维打分，挑出前 3 个再进 <strong>P8</strong> 写大纲，不要平铺。</p>
+        </div>
+        <div class="mini">
+          <h3>已经有积累</h3>
+          <p>从 <strong>P7</strong> 开始。比从 P1 起步更省力，因为你不是在「造」产品，而是在「翻译」经验。</p>
+        </div>
+      </div>
+
+      <div class="row-2" style="margin-top:14px;">
+        <div class="mini">
+          <h3>填槽的写法</h3>
+          <ul>
+            <li><span class="slot">[skill]</span> 越具体越好：写「给独立开发者写文案」比写「写作」好十倍。</li>
+            <li><span class="slot">[audience]</span> 要带状态：写「刚开始做 Notion 模板的新手卖家」比写「Notion 用户」好。</li>
+            <li><span class="slot">[goal]</span> 量化：写「30 天内出第一笔订单」比写「赚点钱」好。</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>常见错误</h3>
+          <ul>
+            <li>跳过验证直接做产品 → 90% 的时间会浪费在卖不动的方向上。</li>
+            <li>同时铺 5 个平台 → 哪个都跑不起来。</li>
+            <li>第一款产品就做阶梯里的「高价」 → 应该先把低价跑通再上探。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">money.skill v1.0｜10 prompt × 5 阶段｜每个 prompt 都可独立使用，按推荐顺序组合时收益最高。</div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const sheets = document.querySelectorAll('.sheet');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    sheets.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.sheet).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }));
+
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.target;
+      const el = document.getElementById(id);
+      if (!el) return;
+      const text = el.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        const old = btn.innerText;
+        btn.innerText = '已复制 ✓';
+        setTimeout(() => btn.innerText = old, 1400);
+      } catch (e) {
+        const r = document.createRange(); r.selectNode(el);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+      }
+    });
+  });
+</script>
+</body>
+</html>
